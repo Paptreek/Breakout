@@ -777,7 +777,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
   player: {fileID: 867903093}
-  brick: {fileID: 5887095493127007633, guid: 7b9ed709fc7dc3c49a09cf41e993625e, type: 3}
 --- !u!1 &867903093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,7 +1394,7 @@ Transform:
   m_GameObject: {fileID: 1472430493}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.9029, y: 0.23438, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
