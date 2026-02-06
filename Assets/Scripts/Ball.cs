@@ -27,17 +27,17 @@ public class Ball : MonoBehaviour
         Vector2 normal = collision.GetContact(0).normal;
         _rb.AddForce(normal * 5);
 
-        float ballContactPoint = collision.GetContact(0).point.x;
+        float contactPoint = collision.GetContact(0).point.x;
         float leftOfPaddle = player.GetComponent<Renderer>().bounds.min.x;
         float rightOfPaddle = player.GetComponent<Renderer>().bounds.max.x;
 
-        if (ballContactPoint == leftOfPaddle)
+        if (contactPoint == leftOfPaddle)
         {
             // if ball collides with left edge of the paddle, direction changes to negative
             _rb.linearVelocity = new Vector2(-Mathf.Abs(-_rb.linearVelocity.x), _rb.linearVelocity.y);
             Debug.Log($"Collided with LEFT edge! New direction: {_rb.linearVelocity.x}");
         }
-        else if (ballContactPoint == rightOfPaddle)
+        else if (contactPoint == rightOfPaddle)
         {
             // if ball collides with right edge, direction changes to positive
             _rb.linearVelocity = new Vector2(Mathf.Abs(_rb.linearVelocity.x), _rb.linearVelocity.y);
