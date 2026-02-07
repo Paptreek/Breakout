@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Ball : MonoBehaviour
 {
     public GameObject player;
     public GameObject brick;
-    public GameObject wall;
 
     public GameObject brickSound;
     public GameObject paddleSound;
     public GameObject wallSound;
+
+    public bool hasGoneBelowPaddle;
 
     private Rigidbody2D _rb;
     private float moveSpeed = 250.0f;
@@ -17,8 +19,15 @@ public class Ball : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+    }
 
-        AddStartingForce();
+    void Update()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame && GameManager.s_isWaitingToStart)
+        {
+            AddStartingForce();
+            GameManager.s_isWaitingToStart = false;
+        }
     }
 
     private void AddStartingForce()
@@ -65,12 +74,26 @@ public class Ball : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall"))
         {
-            wallSound.gameObject.GetComponent<AudioSource>().Play();
+            wallSound.GetComponent<AudioSource>().Play();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            hasGoneBelowPaddle = true;
         }
     }
 
     public int GetNumberOfBricksBroken()
     {
         return _bricksBroken;
+    }
+
+    public void Restart()
+    {
+        transform.position = new Vector3(0, -3, 0);
+        _rb.linearVelocity = new Vector2(0, 0);
     }
 }

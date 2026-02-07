@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject leftWall;
     public GameObject rightWall;
+    public GameObject paddleSound;
+
     private Vector3 _mousePosition;
 
     void Update()
@@ -13,7 +15,10 @@ public class PlayerController : MonoBehaviour
         _mousePosition.y = transform.position.y;
         _mousePosition.z = transform.position.z;
 
-        MovePaddleWithinScreen();
+        if (!GameManager.s_isWaitingToStart)
+        {
+            MovePaddleWithinScreen();
+        }
     }
 
     private void MovePaddleWithinScreen()
@@ -27,5 +32,10 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = _mousePosition;
         }
+    }
+
+    public void Restart()
+    {
+        transform.position = new Vector3(0, -3.5f, 0);
     }
 }
