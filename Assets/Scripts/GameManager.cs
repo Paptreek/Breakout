@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = _score.ToString();
         livesText.text = _lives.ToString();
 
+        _score = ball.GetComponent<Ball>().GetNumberOfBricksBroken() * 100;
+
         ResetGame();
         EndGame();
     }
@@ -31,15 +33,7 @@ public class GameManager : MonoBehaviour
             player.GetComponent<PlayerController>().Restart();
             s_isWaitingToStart = true;
             _lives--;
-            Debug.Log($"Ball go bye bye");
         }
-        // This triggers when some bool from Ball is true, then sets that bool back to false
-
-        // When game is reset:
-        // - Ball goes back to starting position
-        // - Paddle goes back to starting position
-        // - s_isWaitingToStart is set to true
-        // - a life is lost
     }
 
     private void EndGame()
