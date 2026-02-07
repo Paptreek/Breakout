@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
 
     private Rigidbody2D _rb;
     private float moveSpeed = 250.0f;
+    private int _bricksBroken;
     
     void Start()
     {
@@ -57,6 +58,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Brick"))
         {
             _rb.AddForce(normal * 5);
+            _bricksBroken++;
 
             brickSound.gameObject.GetComponent<AudioSource>().Play();
         }
@@ -65,5 +67,10 @@ public class Ball : MonoBehaviour
         {
             wallSound.gameObject.GetComponent<AudioSource>().Play();
         }
+    }
+
+    public int GetNumberOfBricksBroken()
+    {
+        return _bricksBroken;
     }
 }

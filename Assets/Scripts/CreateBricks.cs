@@ -12,7 +12,7 @@ public class CreateBricks : MonoBehaviour
         int columns = 10;
 
         float x = -6.5f;
-        float y = 4.5f;
+        float y = 4.0f;
 
         for (int row = 0; row < rows; row++)
         {
