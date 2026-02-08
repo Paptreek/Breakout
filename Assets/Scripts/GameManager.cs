@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverWin;
 
     private int _score;
-    private int _lives = 0; // set to 0 for testing
+    private int _lives = 1; // set to 0 for testing
     private bool _isGameOver;
     private bool _isMuted;
 

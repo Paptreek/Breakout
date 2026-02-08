@@ -79,6 +79,12 @@ public class Ball : MonoBehaviour
         {
             wallSound.GetComponent<AudioSource>().Play();
         }
+
+        if (collision.gameObject.name == "Ceiling")
+        {
+            Debug.Log($"Collided with ceiling!");
+            player.GetComponent<PlayerController>().ShrinkPaddle();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -86,6 +92,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             hasGoneBelowPaddle = true;
+            player.GetComponent<PlayerController>().GrowPaddle();
         }
     }
 
