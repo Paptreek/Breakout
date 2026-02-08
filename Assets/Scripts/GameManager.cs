@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,13 +14,16 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver;
 
     private int _score;
-    private int _lives = 0; // set to 0 for testing
+    private int _lives = 3;
     private bool _isGameOver;
+    private bool _isMuted;
 
     public static bool s_isWaitingToStart = true;
 
     void Update()
     {
+        CheckForToggleMute();
+
         scoreText.text = _score.ToString();
         livesText.text = _lives.ToString();
 
@@ -73,6 +77,20 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene($"Breakout");
             player.GetComponent<PlayerController>().canMove = true;
             s_isWaitingToStart = true;
+        }
+    }
+
+    void CheckForToggleMute()
+    {
+        if (Keyboard.current.mKey.wasPressedThisFrame && !_isMuted)
+        {
+            AudioListener.volume = 0;
+            _isMuted = true;
+        }
+        else if (Keyboard.current.mKey.wasPressedThisFrame && _isMuted)
+        {
+            AudioListener.volume = 1;
+            _isMuted = false;
         }
     }
 }
