@@ -8,11 +8,12 @@ public class CreateBricks : MonoBehaviour
     {
         GameObject[] bricks = new GameObject[10];
         int counter = 0;
+        float startPosX = -7.75f;
 
-        int rows = 3;
-        int columns = 10;
+        int rows = 6;
+        int columns = 15;
 
-        float x = -6.5f;
+        float x = startPosX;
         float y = 4.0f;
 
         SetColor(Color.softRed);
@@ -22,17 +23,17 @@ public class CreateBricks : MonoBehaviour
             for (int col = 0; col < columns; col++)
             {
                 Instantiate(brick, new Vector3(x, y, 0), new Quaternion().normalized);
-                x += 1.46f;
+                x += 1.10f;
 
                 counter++;
 
-                if (counter < 10) SetColor(Color.softRed);
-                if (counter >= 10) SetColor(Color.softBlue);
-                if (counter >= 20) SetColor(Color.softGreen);
+                if (counter % 2 == 0) SetColor(Color.softRed);
+                if (counter % 4 == 0) SetColor(Color.softBlue);
+                if (counter % 6 == 0) SetColor(Color.softGreen);
             }
 
-            x = -6.5f;
-            y -= 0.75f;
+            x = startPosX;
+            y -= 0.35f;
         }
     }
 
