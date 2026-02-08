@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public TMP_Text scoreText;
     public TMP_Text livesText;
+    public TMP_Text clickToStartText;
 
     public GameObject ball;
     public GameObject player;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 
         ResetScreen();
         EndGame();
+        ShowClickToStart();
     }
 
     private void ResetScreen()
@@ -49,6 +51,18 @@ public class GameManager : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             player.GetComponent<PlayerController>().canMove = false;
             _lives = 0;
+        }
+    }
+
+    private void ShowClickToStart()
+    {
+        if (s_isWaitingToStart == true && gameOver.gameObject.activeInHierarchy == false)
+        {
+            clickToStartText.gameObject.SetActive(true);
+        }
+        else
+        {
+            clickToStartText.gameObject.SetActive(false);
         }
     }
 

@@ -54,12 +54,14 @@ public class Ball : MonoBehaviour
             {
                 // if ball collides with left edge of the paddle, direction changes to negative
                 _rb.linearVelocity = new Vector2(-Mathf.Abs(-_rb.linearVelocity.x), _rb.linearVelocity.y);
+                _rb.linearVelocityX -= 0.5f;
                 Debug.Log($"Collided with LEFT edge! New direction: {_rb.linearVelocity.x}");
             }
             else if (contactPoint == rightOfPaddle)
             {
                 // if ball collides with right edge, direction changes to positive
                 _rb.linearVelocity = new Vector2(Mathf.Abs(_rb.linearVelocity.x), _rb.linearVelocity.y);
+                _rb.linearVelocityX += 0.5f;
                 Debug.Log($"Collided with RIGHT edge! New direction: {_rb.linearVelocity.x}");
             }
         }
