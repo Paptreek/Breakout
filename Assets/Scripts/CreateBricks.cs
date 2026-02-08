@@ -11,12 +11,12 @@ public class CreateBricks : MonoBehaviour
         float startPosX = -7.75f;
 
         // actual
-        //int rows = 6;
-        //int columns = 15;
+        int rows = 6;
+        int columns = 15;
 
         // testing win condition
-        int rows = 1;
-        int columns = 1;
+        //int rows = 1;
+        //int columns = 1;
 
         float x = startPosX;
         float y = 4.0f;

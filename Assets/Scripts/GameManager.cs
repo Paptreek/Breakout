@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public TMP_Text scoreText;
+    public TMP_Text highScoreText;
     public TMP_Text livesText;
     public TMP_Text clickToStartText;
 
@@ -14,20 +16,21 @@ public class GameManager : MonoBehaviour
     public GameObject bricks;
     public GameObject gameOver;
     public GameObject gameOverWin;
+    public GameObject highScore;
 
     private int _score;
-    private int _lives = 1; // set to 0 for testing
+    private int _lives = 3;
     private bool _isGameOver;
     private bool _isMuted;
+    private float _timeLeft = 300;
 
     public static bool s_isWaitingToStart = true;
 
     void Update()
     {
         CheckForToggleMute();
-
-        scoreText.text = _score.ToString();
-        livesText.text = _lives.ToString();
+        ShowClickToStart();
+        ShowUIText();
 
         if (ball != null)
         {
@@ -36,7 +39,10 @@ public class GameManager : MonoBehaviour
             CheckForGameEnd();
         }
 
-        ShowClickToStart();
+        if (_score > GetHighScore("HighScore"))
+        {
+            SetHighScore("HighScore", _score);
+        }
     }
 
     private void CheckForScreenReset()
@@ -58,11 +64,14 @@ public class GameManager : MonoBehaviour
             ball.gameObject.SetActive(false);
             player.gameObject.SetActive(false);
 
+            _lives = 0;
             _isGameOver = true;
             s_isWaitingToStart = false;
+            
             gameOver.gameObject.SetActive(true);
+            highScore.gameObject.SetActive(true);
+            
             player.GetComponent<PlayerController>().canMove = false;
-            _lives = 0;
         }
         
         if (ball.GetComponent<Ball>().AreAllBricksBroken())
@@ -71,10 +80,21 @@ public class GameManager : MonoBehaviour
 
             _isGameOver = true;
             s_isWaitingToStart = false;
+            _score += (Convert.ToInt32(_timeLeft) * 10) + (_lives * 2500);
+            
             gameOverWin.gameObject.SetActive(true);
+            highScore.gameObject.SetActive(true);
             player.gameObject.SetActive(false);
+            
             player.GetComponent<PlayerController>().canMove = false;
         }
+    }
+
+    private void ShowUIText()
+    {
+        scoreText.text = _score.ToString("0000");
+        highScoreText.text = GetHighScore("HighScore").ToString("0000");
+        livesText.text = _lives.ToString();
     }
 
     private void ShowClickToStart()
@@ -86,20 +106,11 @@ public class GameManager : MonoBehaviour
         else
         {
             clickToStartText.gameObject.SetActive(false);
+            StartTimer();
         }
     }
 
-    public void StartNewGame()
-    {
-        if (_isGameOver == true)
-        {
-            SceneManager.LoadScene($"Breakout");
-            player.GetComponent<PlayerController>().canMove = true;
-            s_isWaitingToStart = true;
-        }
-    }
-
-    void CheckForToggleMute()
+    private void CheckForToggleMute()
     {
         if (Keyboard.current.mKey.wasPressedThisFrame && !_isMuted)
         {
@@ -110,6 +121,37 @@ public class GameManager : MonoBehaviour
         {
             AudioListener.volume = 1;
             _isMuted = false;
+        }
+    }
+
+    private void StartTimer()
+    {
+        if (_timeLeft > 0)
+        {
+            _timeLeft -= Time.deltaTime;
+        }
+
+        Debug.Log(_timeLeft.ToString("0.0"));
+    }
+
+    private void SetHighScore(string KeyName, int Value)
+    {
+        PlayerPrefs.SetInt(KeyName, Value);
+    }
+
+    private int GetHighScore(string KeyName)
+    {
+        return PlayerPrefs.GetInt(KeyName);
+    }
+
+    private void StartNewGame()
+    {
+        // gets called when player clicks "PLAY AGAIN" button
+        if (_isGameOver == true)
+        {
+            SceneManager.LoadScene($"Breakout");
+            player.GetComponent<PlayerController>().canMove = true;
+            s_isWaitingToStart = true;
         }
     }
 }
