@@ -3,15 +3,20 @@ using UnityEngine;
 public class CreateBricks : MonoBehaviour
 {
     public GameObject brick;
+    private int _counter;
 
     void Awake()
     {
         GameObject[] bricks = new GameObject[10];
-        int counter = 0;
         float startPosX = -7.75f;
 
-        int rows = 6;
-        int columns = 15;
+        // actual
+        //int rows = 6;
+        //int columns = 15;
+
+        // testing win condition
+        int rows = 1;
+        int columns = 1;
 
         float x = startPosX;
         float y = 4.0f;
@@ -25,11 +30,11 @@ public class CreateBricks : MonoBehaviour
                 Instantiate(brick, new Vector3(x, y, 0), new Quaternion().normalized);
                 x += 1.10f;
 
-                counter++;
+                _counter++;
 
-                if (counter % 2 == 0) SetColor(Color.softRed);
-                if (counter % 4 == 0) SetColor(Color.softBlue);
-                if (counter % 6 == 0) SetColor(Color.softGreen);
+                if (_counter % 2 == 0) SetColor(Color.softRed);
+                if (_counter % 4 == 0) SetColor(Color.softBlue);
+                if (_counter % 6 == 0) SetColor(Color.softGreen);
             }
 
             x = startPosX;
@@ -40,5 +45,10 @@ public class CreateBricks : MonoBehaviour
     private void SetColor(Color color)
     {
         brick.GetComponent<SpriteRenderer>().color = color;
+    }
+
+    public int GetCounter()
+    {
+        return _counter;
     }
 }

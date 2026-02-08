@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject ball;
     public GameObject player;
+    public GameObject bricks;
     public GameObject gameOver;
+    public GameObject gameOverWin;
 
     private int _score;
-    private int _lives = 3;
+    private int _lives = 0; // set to 0 for testing
     private bool _isGameOver;
     private bool _isMuted;
 
@@ -27,14 +29,17 @@ public class GameManager : MonoBehaviour
         scoreText.text = _score.ToString();
         livesText.text = _lives.ToString();
 
-        _score = ball.GetComponent<Ball>().GetNumberOfBricksBroken() * 100;
+        if (ball != null)
+        {
+            _score = ball.GetComponent<Ball>().GetNumberOfBricksBroken() * 100;
+            CheckForScreenReset();
+            CheckForGameEnd();
+        }
 
-        ResetScreen();
-        EndGame();
         ShowClickToStart();
     }
 
-    private void ResetScreen()
+    private void CheckForScreenReset()
     {
         if (ball.GetComponent<Ball>().hasGoneBelowPaddle == true)
         {
@@ -46,21 +51,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndGame()
+    private void CheckForGameEnd()
     {
         if (_lives < 0)
         {
+            ball.gameObject.SetActive(false);
+            player.gameObject.SetActive(false);
+
             _isGameOver = true;
             s_isWaitingToStart = false;
             gameOver.gameObject.SetActive(true);
             player.GetComponent<PlayerController>().canMove = false;
             _lives = 0;
         }
+        
+        if (ball.GetComponent<Ball>().AreAllBricksBroken())
+        {
+            Destroy(ball);
+
+            _isGameOver = true;
+            s_isWaitingToStart = false;
+            gameOverWin.gameObject.SetActive(true);
+            player.gameObject.SetActive(false);
+            player.GetComponent<PlayerController>().canMove = false;
+        }
     }
 
     private void ShowClickToStart()
     {
-        if (s_isWaitingToStart == true && gameOver.gameObject.activeInHierarchy == false)
+        if (s_isWaitingToStart == true && gameOver.gameObject.activeInHierarchy == false && gameOverWin.gameObject.activeInHierarchy == false)
         {
             clickToStartText.gameObject.SetActive(true);
         }

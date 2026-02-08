@@ -5,6 +5,7 @@ public class Ball : MonoBehaviour
 {
     public GameObject player;
     public GameObject brick;
+    public GameObject bricks;
 
     public GameObject brickSound;
     public GameObject paddleSound;
@@ -91,6 +92,18 @@ public class Ball : MonoBehaviour
     public int GetNumberOfBricksBroken()
     {
         return _bricksBroken;
+    }
+
+    public bool AreAllBricksBroken()
+    {
+        if (_bricksBroken >= bricks.gameObject.GetComponent<CreateBricks>().GetCounter())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void Restart()
