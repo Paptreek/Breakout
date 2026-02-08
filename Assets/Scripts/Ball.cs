@@ -69,7 +69,7 @@ public class Ball : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Brick"))
         {
-            _rb.AddForce(normal * 5);
+            _rb.AddForce(normal * 3.5f);
             _bricksBroken++;
 
             brickSound.gameObject.GetComponent<AudioSource>().Play();

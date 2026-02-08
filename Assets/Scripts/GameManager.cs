@@ -130,8 +130,6 @@ public class GameManager : MonoBehaviour
         {
             _timeLeft -= Time.deltaTime;
         }
-
-        Debug.Log(_timeLeft.ToString("0.0"));
     }
 
     private void SetHighScore(string KeyName, int Value)
@@ -144,9 +142,9 @@ public class GameManager : MonoBehaviour
         return PlayerPrefs.GetInt(KeyName);
     }
 
+    // gets called when player clicks "PLAY AGAIN" button
     private void StartNewGame()
     {
-        // gets called when player clicks "PLAY AGAIN" button
         if (_isGameOver == true)
         {
             SceneManager.LoadScene($"Breakout");
