@@ -32,7 +32,7 @@ public class Ball : MonoBehaviour
 
     private void AddStartingForce()
     {
-        float x = Random.value < 0.5f ? Random.Range(-0.75f, -0.5f) : Random.Range(0.5f, 0.75f);
+        float x = Random.value < 0.5f ? Random.Range(-0.75f, -0.25f) : Random.Range(0.25f, 0.75f);
         Debug.Log(x);
 
         _rb.AddForce(new Vector2(x, 1) * moveSpeed);

@@ -1,15 +1,19 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public TMP_Text scoreText;
     public TMP_Text livesText;
+
     public GameObject ball;
     public GameObject player;
+    public GameObject gameOver;
 
     private int _score;
-    private int _lives = 3;
+    private int _lives = 0; // set to 0 for testing
+    private bool _isGameOver;
 
     public static bool s_isWaitingToStart = true;
 
@@ -20,11 +24,11 @@ public class GameManager : MonoBehaviour
 
         _score = ball.GetComponent<Ball>().GetNumberOfBricksBroken() * 100;
 
-        ResetGame();
+        ResetScreen();
         EndGame();
     }
 
-    private void ResetGame()
+    private void ResetScreen()
     {
         if (ball.GetComponent<Ball>().hasGoneBelowPaddle == true)
         {
@@ -40,7 +44,21 @@ public class GameManager : MonoBehaviour
     {
         if (_lives < 0)
         {
-            Debug.Log($"Game Over!");
+            _isGameOver = true;
+            s_isWaitingToStart = false;
+            gameOver.gameObject.SetActive(true);
+            player.GetComponent<PlayerController>().canMove = false;
+            _lives = 0;
+        }
+    }
+
+    public void StartNewGame()
+    {
+        if (_isGameOver == true)
+        {
+            SceneManager.LoadScene($"Breakout");
+            player.GetComponent<PlayerController>().canMove = true;
+            s_isWaitingToStart = true;
         }
     }
 }

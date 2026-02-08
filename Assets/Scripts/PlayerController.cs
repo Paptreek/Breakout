@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public GameObject rightWall;
     public GameObject paddleSound;
 
+    public bool canMove = true;
+
     private Vector3 _mousePosition;
 
     void Update()
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
         float rightEdgeOfLeftWall = leftWall.GetComponent<Renderer>().bounds.max.x;
         float leftEdgeOfRightWall = rightWall.GetComponent<Renderer>().bounds.min.x;
 
-        if (cursor - halfOfPaddle / 2 >= rightEdgeOfLeftWall && cursor + halfOfPaddle / 2 <= leftEdgeOfRightWall)
+        if (cursor - halfOfPaddle / 2 >= rightEdgeOfLeftWall && cursor + halfOfPaddle / 2 <= leftEdgeOfRightWall && canMove)
         {
             transform.position = _mousePosition;
         }
