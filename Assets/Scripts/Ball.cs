@@ -14,8 +14,10 @@ public class Ball : MonoBehaviour
     public bool hasGoneBelowPaddle;
 
     private Rigidbody2D _rb;
-    private float moveSpeed = 250.0f;
+    private float _moveSpeed = 250.0f;
     private int _bricksBroken;
+    private Vector2 _maxVelocity;
+    private bool _hasVelocityReachedThreshold;
     
     void Start()
     {
@@ -24,6 +26,15 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
+        _maxVelocity = _rb.linearVelocity;
+
+        if (_maxVelocity.y > 7.5f)
+        {
+            _hasVelocityReachedThreshold = true;
+        }
+
+        Debug.Log(_maxVelocity);
+
         if (Mouse.current.leftButton.wasPressedThisFrame && GameManager.s_isWaitingToStart)
         {
             AddStartingForce();
@@ -34,9 +45,18 @@ public class Ball : MonoBehaviour
     private void AddStartingForce()
     {
         float x = Random.value < 0.5f ? Random.Range(-0.75f, -0.25f) : Random.Range(0.25f, 0.75f);
-        Debug.Log(x);
+        float y;
 
-        _rb.AddForce(new Vector2(x, 1) * moveSpeed);
+        if (!_hasVelocityReachedThreshold)
+        {
+            y = 1.0f;
+        }
+        else
+        {
+            y = 1.5f;
+        }
+
+        _rb.AddForce(new Vector2(x, y) * _moveSpeed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

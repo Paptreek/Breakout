@@ -2485,7 +2485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.9, y: 0}
+  m_AnchoredPosition: {x: 20.9, y: 0}
   m_SizeDelta: {x: 27.5778, y: 28.4474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1177262827
@@ -4032,8 +4032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -33.3, y: 0}
-  m_SizeDelta: {x: 86.2543, y: 28.4474}
+  m_AnchoredPosition: {x: -74.6, y: 0}
+  m_SizeDelta: {x: 171.5222, y: 28.4474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2124907458
 MonoBehaviour:
@@ -4055,7 +4055,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lives:'
+  m_text: 'Extra Lives:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9eff61e2331aaf34d955c92a1814d2bc, type: 2}
   m_sharedMaterial: {fileID: 6641444080824887119, guid: 9eff61e2331aaf34d955c92a1814d2bc, type: 2}
